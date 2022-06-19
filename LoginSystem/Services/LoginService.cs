@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LoginSystem.Entities;
+using LoginSystem.Helpers;
 using LoginSystem.Models;
 using LoginSystem.Models.Register;
 using LoginSystem.Persistence;
@@ -69,7 +70,7 @@ namespace LoginSystem.Services
 
         public void Update(int id, UpdateRequest model)
         {
-            var user = getUser(id);
+            var user = GetUser(id);
 
             // validate
             if (model.Username != user.Username && _dataContext.Users.Any(x => x.Username == model.Username))
@@ -87,14 +88,14 @@ namespace LoginSystem.Services
 
         public void Delete(int id)
         {
-            var user = getUser(id);
+            var user = GetUser(id);
             _dataContext.Users.Remove(user);
             _dataContext.SaveChanges();
         }
 
 
-        public User GetById(int id) => getUser(id);
-        private User getUser(int id)
+        public User GetById(int id) => GetUser(id);
+        private User GetUser(int id)
         {
             var user = _dataContext.Users.Find(id);
             if (user == null) throw new KeyNotFoundException("User not found");

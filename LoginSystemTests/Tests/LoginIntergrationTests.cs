@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using GenFu;
-using LoginSystem.Entities;
 using LoginSystem.Helpers;
 using LoginSystem.Maps;
 using LoginSystem.Models;
@@ -9,7 +8,6 @@ using LoginSystem.Models.Register;
 using LoginSystem.Persistence;
 using LoginSystem.Services;
 using LoginSystemTests.Helpers;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -37,10 +35,10 @@ namespace LoginSystemTests.Tests
             jwtUtilities = new JwtUtilities(someOptions);
             loginService = new LoginService(dataContext, mapper, jwtUtilities);
         }
-   
-        [Test,Order(1)]
+
+        [Test, Order(1)]
         public void UserRegistersSuccesfully()
-        {                
+        {
             loginService.Register(request);
 
             var result = dataContext.Users.Where(x => x.Username == request.Username)
@@ -51,13 +49,13 @@ namespace LoginSystemTests.Tests
             result.Email.Should().Be(request.Email);
         }
 
-        [Test,Order(2)]
+        [Test, Order(2)]
         public void UserAlreadyRegistered()
         {
             loginService.VerifyDuplicateUser(request).Should().BeTrue();
         }
 
-        [Test,Order(3)]
+        [Test, Order(3)]
         public void UserLogsIn()
         {
             loginService.Login(request);
@@ -67,7 +65,7 @@ namespace LoginSystemTests.Tests
         {
             var updateModel = A.New<UpdateRequest>();
 
-            loginService.Update(dataContext.Users.First().Id,updateModel);
+            loginService.Update(dataContext.Users.First().Id, updateModel);
             loginService
                 .FindUserWithUserName(updateModel.Username)
                 .Username
@@ -84,7 +82,7 @@ namespace LoginSystemTests.Tests
                 .Should()
                 .BeNull();
         }
-        private Mapper CreateMap()
+        private static Mapper CreateMap()
         {
             var p = new List<Profile>
             {
@@ -94,7 +92,7 @@ namespace LoginSystemTests.Tests
 
             var configuration = new MapperConfiguration(cfg =>
             p.ForEach(p => cfg.AddProfile(p))
-            ); 
+            );
 
             return new Mapper(configuration);
         }

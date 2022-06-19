@@ -16,11 +16,11 @@ namespace LoginSystemTests.Tests
         [Test]
         public void PasswordVerifies()
         {
-            Mock<DataContext> dataContext = new Mock<DataContext>();
-            Mock<IMapper> mapper = new Mock<IMapper>();
-            Mock<IJwtUtilities> jwtUtilities = new Mock<IJwtUtilities>();
+            Mock<DataContext> dataContext = new();
+            Mock<IMapper> mapper = new();
+            Mock<IJwtUtilities> jwtUtilities = new();
 
-            LoginService loginService = new LoginService(dataContext.Object, mapper.Object,jwtUtilities.Object);
+            LoginService loginService = new(dataContext.Object, mapper.Object, jwtUtilities.Object);
 
             string password = "password";
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
@@ -33,7 +33,7 @@ namespace LoginSystemTests.Tests
         public void UserGeneratesTokens()
         {
             var someOptions = Options.Create(new AppSettings());
-            JwtUtilities jwtUtilities = new JwtUtilities(someOptions);
+            JwtUtilities jwtUtilities = new(someOptions);
 
             var user = A.New<User>();
             var token = jwtUtilities.GenerateToken(user);

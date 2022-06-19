@@ -1,6 +1,5 @@
 ﻿using LoginSystem.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace LoginSystem.Persistence
 {

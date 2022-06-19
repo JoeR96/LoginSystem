@@ -3,27 +3,31 @@ using LoginSystem.Entities;
 using LoginSystem.Models;
 using LoginSystem.Models.Register;
 
-public class AutoMapperProfile : Profile
+
+namespace LoginSystem.Maps
 {
-    public AutoMapperProfile()
+    public class AutoMapperProfile : Profile
     {
-        // User -> AuthenticateResponse
-        CreateMap<User, AuthenticateResponse>();
+        public AutoMapperProfile()
+        {
+            // User -> AuthenticateResponse
+            CreateMap<User, AuthenticateResponse>();
 
-        // RegisterRequest -> User
-        CreateMap<LoginSignUpRequest, User>();
+            // RegisterRequest -> User
+            CreateMap<LoginSignUpRequest, User>();
 
-        // UpdateRequest -> User
-        CreateMap<UpdateRequest, User>()
-            .ForAllMembers(x => x.Condition(
-                (src, dest, prop) =>
-                {
+            // UpdateRequest -> User
+            CreateMap<UpdateRequest, User>()
+                .ForAllMembers(x => x.Condition(
+                    (src, dest, prop) =>
+                    {
                     // ignore null & empty string properties
                     if (prop == null) return false;
-                    if (prop.GetType() == typeof(string) && string.IsNullOrEmpty((string)prop)) return false;
+                        if (prop.GetType() == typeof(string) && string.IsNullOrEmpty((string)prop)) return false;
 
-                    return true;
-                }
-            ));
+                        return true;
+                    }
+                ));
+        }
     }
 }

@@ -11,18 +11,13 @@ namespace LoginSystem.Controllers
 {
     public class UsersController : ControllerBase
     {
-        private ILoginService _loginService;
-        private IMapper _mapper;
-        private readonly AppSettings _appSettings;
+        private readonly ILoginService _loginService;
 
         public UsersController(
-            ILoginService loginService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            ILoginService loginService)
         {
             _loginService = loginService;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
+         
         }
 
         [AllowAnonymous]

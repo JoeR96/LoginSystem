@@ -18,6 +18,6 @@ namespace LoginSystemTests.Helpers
             _dataContext.Database.EnsureCreated();
         }
 
-         
+
     }
 }
